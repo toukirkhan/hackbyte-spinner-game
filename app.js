@@ -46,6 +46,8 @@ const winnerAvatar = document.getElementById("winnerAvatar");
 const winnerUsername = document.getElementById("winnerUsername");
 const nextSpinBtn  = document.getElementById("nextSpinBtn");
 const confettiArea = document.getElementById("confettiCanvas");
+const bulkInput    = document.getElementById("bulkInput");
+const bulkAddBtn   = document.getElementById("bulkAddBtn");
 
 // ─── Boot ─────────────────────────────────────────────────────────────────────
 (async function init() {
@@ -104,6 +106,7 @@ addBtn.addEventListener("click", addParticipant);
 usernameInput.addEventListener("keydown", e => {
   if (e.key === "Enter") addParticipant();
 });
+bulkAddBtn.addEventListener("click", addBulkParticipants);
 
 async function addParticipant() {
   const username = usernameInput.value.trim();
@@ -126,6 +129,54 @@ async function addParticipant() {
   setStatus(`✅ Added @${username} to the wheel.`);
   addBtn.disabled = false;
   usernameInput.focus();
+}
+
+// ─── Bulk add participants ────────────────────────────────────────────────────
+async function addBulkParticipants() {
+  const raw = bulkInput.value;
+  if (!raw.trim()) return;
+
+  // Split on newlines and/or commas, clean up each entry
+  const usernames = raw
+    .split(/[\n,]+/)
+    .map(u => u.trim())
+    .filter(u => u.length > 0);
+
+  if (usernames.length === 0) return;
+
+  bulkAddBtn.disabled = true;
+  addBtn.disabled = true;
+  setStatus(`⏳ Adding ${usernames.length} participant(s)…`);
+
+  let added = 0;
+  let skipped = 0;
+
+  for (const username of usernames) {
+    if (participants.includes(username)) {
+      skipped++;
+      continue;
+    }
+    try {
+      participants = await apiAddParticipant(username);
+    } catch {
+      if (!participants.includes(username)) participants.push(username);
+    }
+    added++;
+  }
+
+  bulkInput.value = "";
+  renderParticipantList();
+  drawWheel();
+  updateSpinBtn();
+
+  const parts = [];
+  if (added > 0) parts.push(`✅ Added ${added} participant(s)`);
+  if (skipped > 0) parts.push(`⚠️ ${skipped} already in list`);
+  setStatus(parts.join(" · "));
+
+  bulkAddBtn.disabled = false;
+  addBtn.disabled = false;
+  bulkInput.focus();
 }
 
 // ─── Remove participant ───────────────────────────────────────────────────────
