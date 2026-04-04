@@ -189,7 +189,7 @@ class SpinnerHandler(BaseHTTPRequestHandler):
 
 if __name__ == "__main__":
     ensure_data_files()
-    server = HTTPServer(("", PORT), SpinnerHandler)
+    server = HTTPServer(("127.0.0.1", PORT), SpinnerHandler)
     print(f"🎡 HackByte Spinner running at http://localhost:{PORT}")
     print("   Press Ctrl+C to stop.")
     try:
