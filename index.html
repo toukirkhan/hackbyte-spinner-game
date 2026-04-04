@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HackByte 4.0 — GitHub Roulette Spinner 🎡</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- ====== HEADER ====== -->
+  <header>
+    <div class="header-inner">
+      <span class="header-logo">
+        <!-- GitHub Copilot-inspired icon -->
+        <svg height="28" width="28" viewBox="0 0 16 16" fill="#58a6ff" aria-hidden="true">
+          <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38
+            0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13
+            -.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87
+            2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95
+            0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82
+            .64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82
+            2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15
+            0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48
+            0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/>
+        </svg>
+        GitHub Copilot
+      </span>
+      <h1>🎡 HackByte 4.0 &mdash; Roulette Spinner</h1>
+      <span class="header-badge">Swag Giveaway</span>
+    </div>
+  </header>
+
+  <!-- ====== MAIN LAYOUT ====== -->
+  <main class="layout">
+
+    <!-- LEFT: Participants -->
+    <aside class="panel panel-left">
+      <h2 class="panel-title">👥 Participants</h2>
+
+      <div class="add-form">
+        <input
+          id="usernameInput"
+          type="text"
+          placeholder="GitHub username…"
+          autocomplete="off"
+          spellcheck="false"
+        />
+        <button id="addBtn" class="btn btn-green">Add</button>
+      </div>
+
+      <ul id="participantList" class="user-list"></ul>
+    </aside>
+
+    <!-- CENTER: Wheel -->
+    <section class="center-panel">
+      <div class="wheel-wrapper">
+        <div class="wheel-pointer" aria-hidden="true">▼</div>
+        <canvas id="wheelCanvas" width="480" height="480"></canvas>
+      </div>
+      <button id="spinBtn" class="btn btn-spin" disabled>Spin!</button>
+      <p id="spinStatus" class="spin-status"></p>
+    </section>
+
+    <!-- RIGHT: Winners -->
+    <aside class="panel panel-right">
+      <h2 class="panel-title">🏆 Winners</h2>
+      <ul id="winnerList" class="user-list"></ul>
+      <button id="exportBtn" class="btn btn-outline">📤 Export Winners (JSON)</button>
+    </aside>
+
+  </main>
+
+  <!-- ====== WINNER MODAL ====== -->
+  <div id="winnerModal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal-backdrop"></div>
+    <div class="modal-box">
+      <div id="confettiCanvas" class="confetti-area" aria-hidden="true"></div>
+      <h2 id="modalTitle">🎉 We have a winner!</h2>
+      <img id="winnerAvatar" src="" alt="Winner avatar" class="winner-avatar" />
+      <p id="winnerUsername" class="winner-name"></p>
+      <p class="winner-sub">Congratulations on winning exclusive GitHub Copilot swag! 🚀</p>
+      <button id="nextSpinBtn" class="btn btn-green">Next Spin →</button>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
