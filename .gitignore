@@ -1,0 +1,12 @@
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+
+# Runtime data files (auto-created by server.py)
+data/participants.json
+data/winners.json
+
+# OS files
+.DS_Store
+Thumbs.db
