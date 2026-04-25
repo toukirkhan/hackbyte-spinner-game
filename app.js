@@ -45,6 +45,7 @@ const winnerModal  = document.getElementById("winnerModal");
 const winnerAvatar = document.getElementById("winnerAvatar");
 const winnerUsername = document.getElementById("winnerUsername");
 const nextSpinBtn  = document.getElementById("nextSpinBtn");
+const closeModalBtn = document.getElementById("closeModalBtn");
 const confettiArea = document.getElementById("confettiCanvas");
 const bulkInput    = document.getElementById("bulkInput");
 const bulkAddBtn   = document.getElementById("bulkAddBtn");
@@ -421,7 +422,7 @@ function showWinnerModal(username) {
   launchConfetti();
 }
 
-nextSpinBtn.addEventListener("click", () => {
+function dismissModal() {
   winnerModal.classList.add("hidden");
   clearConfetti();
   updateSpinBtn();
@@ -432,7 +433,10 @@ nextSpinBtn.addEventListener("click", () => {
   } else {
     setStatus(`${participants.length} participants remaining.`);
   }
-});
+}
+
+nextSpinBtn.addEventListener("click", dismissModal);
+closeModalBtn.addEventListener("click", dismissModal);
 
 // ─── Confetti ─────────────────────────────────────────────────────────────────
 const CONFETTI_COLORS = ["#238636","#58a6ff","#a371f7","#ffa657","#f78166","#56d364","#ffca4e"];
